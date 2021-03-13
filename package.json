@@ -1,0 +1,18 @@
+{
+    "name": "library-rest-api",
+    "version": "1.0.0",
+    "description": "A sample rest API for a hypothetical library",
+    "main": "app.js",
+    "scripts": {
+        "dev": "nodemon app.js"
+    },
+    "author": "Aditya Bhattacharya",
+    "license": "MIT",
+    "dependencies": {
+        "express": "^4.17.1",
+        "mongoose": "^5.12.0"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.7"
+    }
+}
