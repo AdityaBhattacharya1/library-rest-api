@@ -60,7 +60,7 @@ router.delete('/delete/:id', async (req, res) => {
 })
 
 // 7. Get random book (GET)
-router.get('/random', async (req, res) => {
+router.get('/random', async (_, res) => {
     const count = await Book.countDocuments()
     const random = Math.floor(Math.random() * count)
     const bookName = await Book.findOne().skip(random)

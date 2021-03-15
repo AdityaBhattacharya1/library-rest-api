@@ -160,9 +160,31 @@ npm install
 npm run dev
 ```
 
+<p align="center">
+  <h3>OR</h3>
+</p>
+
+```
+:: Run in Docker
+docker-compose up
+:: use -d flag to run in background
+
+:: Tear down
+docker-compose down
+
+:: To be able to edit files, add volume to compose file
+volumes: ['./:/usr/src/app']
+
+:: To re-build
+docker-compose build
+```
+
 On success -
 
--   Server started on port {port, default is 3000} - server has been started
+-   Server started! - server has been started
 -   MongoDB up and running - database server has started
 
 _[Note: Both are necessary for full functionality of the REST API]_
+
+If you run it **without** docker, the server should be up at port **3000** of localhost.
+If you run it **with** docker, the server should be up at port **80** of localhost.

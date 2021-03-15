@@ -10,12 +10,15 @@ const app = express()
 app.use(express.json())
 
 // Database
-const connectionLink = 'mongodb://localhost/library'
+// Note: If you want to run the REST API locally without Docker, use connectionLink: mongodb://mongo:27017/library instead.
+const connectionLink = 'mongodb://mongo:27017/library'
 
-mongoose.connect(connectionLink, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
+mongoose
+    .connect(connectionLink, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .catch((err) => console.log(err))
 
 const db = mongoose.connection
 db.once('open', () => {
@@ -23,7 +26,7 @@ db.once('open', () => {
 })
 
 // Routes
-app.get('/', (req, res) => {
+app.get('/', (_, res) => {
     res.send('Hello world!')
 })
 
@@ -32,4 +35,4 @@ app.use('/books', BookRoutes)
 // App start
 const port = 3000
 
-app.listen(port, console.log(`Server started on port ${port}`))
+app.listen(port, console.log(`Server started!`))
