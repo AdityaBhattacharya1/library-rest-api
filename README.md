@@ -48,7 +48,7 @@ http://localhost:3000/books/get/5099803df3f4948bd2f98391
 **Function**: Substitute `:name` for the name of the author. The JSON output will show all the desired books<br />
 **Note**: While substituting for `:name`, ensure that you replace the whitespace in the name with hyphens (-) and maintain the punctuation of the name. </br >
 Example: <br />
-_Context_: A GET request for the book 'The Da Vinci Code' by _Dan Brown_, which is already stored in your database. This is assuming there is only **1** entry for a book authored by Dan Brown. <br />
+_Context_: A GET request for the book 'The Da Vinci Code' by _Dan Brown_, which is already stored in your database. The input and outputs for both scenarios are given below: <br />
 
 ### Input-
 
@@ -170,6 +170,7 @@ docker-compose up
 :: use -d flag to run in background
 
 :: Tear down
+:: You can also simply press Ctrl + C or ⌘ + C for the same result
 docker-compose down
 
 :: To be able to edit files, add volume to compose file
