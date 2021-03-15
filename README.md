@@ -186,5 +186,5 @@ On success -
 
 _[Note: Both are necessary for full functionality of the REST API]_
 
-If you run it **without** docker, the server should be up at port **3000** of localhost.
+If you run it **without** docker, the server should be up at port **3000** of localhost. <br />
 If you run it **with** docker, the server should be up at port **80** of localhost.
