@@ -14,70 +14,90 @@ A sample rest API for a hypothetical library.
 
 <br />
 
-# Routes / API endpoints available:
+# API Reference
 
-## Home route
+## Home Route
 
-**Link**: / <br />
-**Type**: GET <br />
-**Function**: Home route. Greets you with a 'Hello world!'. <br />
-
-## Get All Books route
-
-**Link**: /books/<br />
-**Type**: GET<br />
-**Function**: Gets all the books that are stored in the database<br />
-
-## Get Books By ID route
-
-**Link**: /books/get/`:id`<br />
-**Type**: GET<br />
-**Function**: Substitute `:id` for the id of the book. The JSON output will show the desired book<br />
-**Sample**:
-
-### Input-
-
-```
-http://localhost:3000/books/get/5099803df3f4948bd2f98391
-:: This is a sample id.
+```http
+  GET /
 ```
 
-## Get All Books By Certain Author route
+| Parameter | Type  | Description                                   |
+| :-------- | :---- | :-------------------------------------------- |
+| None      | `GET` | Home route. Greets you with a 'Hello world!'. |
 
-**Link**: /books/author/`:name`<br />
-**Type**: GET<br />
-**Function**: Substitute `:name` for the name of the author. The JSON output will show all the desired books<br />
-**Note**: While substituting for `:name`, ensure that you replace the whitespace in the name with hyphens (-) and maintain the punctuation of the name. </br >
-Example: <br />
-_Context_: A GET request for the book 'The Da Vinci Code' by _Dan Brown_, which is already stored in your database. The input and outputs for both scenarios are given below: <br />
-
-### Input-
-
-```
-http://localhost:3000/books/author/Dan-Brown
-
-:: Note that the first letters of the first-name and last-name have been capitalized.
-:: Also, the whitespace has been substituted for a hyphen (-)
-```
-
-### Outputs-
-
+<hr />
 <br />
 
-**In case of only a single entry for a book authored by Dan Brown-**
+## Get All Books
+
+```http
+  GET /books/
+```
+
+| Parameter | Type  | Description                                         |
+| :-------- | :---- | :-------------------------------------------------- |
+| None      | `GET` | Gets all the books that are stored in the database. |
+
+<hr />
+<br />
+
+## Get Books By ID
+
+```http
+  GET /books/${id}
+```
+
+| Parameter | Type  | Description                                                                           |
+| :-------- | :---- | :------------------------------------------------------------------------------------ |
+| id        | `GET` | Substitute `${id}` for the id of the book. The JSON output will show the desired book |
+
+Example:
 
 ```
-{
+  http://localhost:3000/books/get/5099803df3f4948bd2f98391
+```
+
+<hr />
+<br />
+
+## Get All Books By Certain Author
+
+```http
+  GET /books/author/${name}
+```
+
+| Parameter | Type  | Description                                                                                                                                                      |
+| :-------- | :---- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| id        | `GET` | Substitute `${name}` for the name of the author. The JSON output will return the books authored (an array, if there are multiple entries or just a JSON object). |
+
+**Note: While substituting for ${name}, ensure that you replace the whitespace in the name with hyphens (-) and maintain the punctuation of the name.** <br />
+
+### Example: <br />
+
+Input:
+
+```
+  // A book authored by Dan Brown is already stored in the DB
+  http://localhost:3000/books/author/Dan-Brown
+```
+
+Output: <br />
+
+1. Single Entry
+
+```
+  {
     "title": "The Da Vinci Code",
     "author": "Dan Brown",
     "description": "..."
 }
 ```
 
-**In case of multiple entries of books authored by Dan Brown-**
+2. Multiple Entries
 
 ```
-[
+  [
   {
     "title": "The Da Vinci Code",
     "author": "Dan Brown",
@@ -97,52 +117,77 @@ http://localhost:3000/books/author/Dan-Brown
 ]
 ```
 
-## Create New Entry Of Book route
+<hr />
+<br />
 
-**Link**: /books/new/<br />
-**Type**: POST<br />
-**Function**: Create new book. Title is required, author and description are optional<br />
+## Create New Entry Of Book
 
-## Update Book route
-
-**Link**: /books/update/`:id`<br />
-**Type**: PATCH<br />
-**Function**: Substitute `:id` for the id of the book. Enter the fields which are to be updated in JSON format and send the request.<br />
-**Sample**:
-
-### Input-
-
-```
-http://localhost:3000/books/update/5099803df3f4948bd2f98391
-:: Before sending the request, ensure that you include the changes in the request body
+```http
+  POST /books/new
 ```
 
-## Delete Book By ID route
+| Parameter | Type   | Description                                                             |
+| :-------- | :----- | :---------------------------------------------------------------------- |
+| None      | `POST` | Create new book. Title is required, author and description are optional |
 
-**Link**: /books/delete/`:id`<br />
-**Type**: DELETE<br />
-**Function**: Substitute `:id` for the id of the book. The JSON output will show the deleted book. You can check if the book has indeed been deleted by going to the Get All Books route. <br />
-**Sample**:
+<hr />
+<br />
 
-### Input-
+## Update Book Data
+
+```http
+  PATCH /books/update:${id}
+```
+
+| Parameter | Type    | Description                                                                                                              |
+| :-------- | :------ | :----------------------------------------------------------------------------------------------------------------------- |
+| None      | `PATCH` | Substitute `${id}` for the id of the book. Enter the fields which are to be updated in JSON format and send the request. |
+
+Example:
 
 ```
-http://localhost:3000/books/delete/5099803df3f4948bd2f98391
-:: This is a sample id.
+// Before making the request, ensure that you include the updated data in the request body.
+  http://localhost:3000/books/update/5099803df3f4948bd2f98391
 ```
 
-## Get Random Book route
+<hr /><br />
 
-**Link**: /books/random<br />
-**Type**: GET<br />
-**Function**: Fetches a random book from the database.
+## Delete Book
 
+```http
+  DELETE /books/delete:${id}
+```
+
+| Parameter | Type     | Description                                                                                                                                                                   |
+| :-------- | :------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| None      | `DELETE` | Substitute `${id}` for the id of the book. The JSON output will show the deleted book. You can check if the book has indeed been deleted by going to the Get All Books route. |
+
+Example:
+
+```
+// Before making the request, ensure that you include the updated data in the request body.
+  http://localhost:3000/books/delete/5099803df3f4948bd2f98391
+```
+
+<hr /><br />
+
+## Get Random Book
+
+```http
+  GET /books/random
+```
+
+| Parameter | Type  | Description                                                                                                              |
+| :-------- | :---- | :----------------------------------------------------------------------------------------------------------------------- |
+| None      | `GET` | Fetches a random book from the database (Assuming that there are books stored in the DB, else returns empty JSON object) |
+
+<hr />
 <br />
 
 # To Clone:
 
 ```
-    git clone https://github.com/AdityaBhattacharya1/library-rest-api
+  git clone https://github.com/AdityaBhattacharya1/library-rest-api
 ```
 
 <br />
