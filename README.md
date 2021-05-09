@@ -136,7 +136,7 @@ Output: <br />
 ## Update Book Data
 
 ```http
-  PATCH /books/update:${id}
+  PATCH /books/update/${id}
 ```
 
 | Parameter | Type    | Description                                                                                                              |
@@ -155,7 +155,7 @@ Example:
 ## Delete Book
 
 ```http
-  DELETE /books/delete:${id}
+  DELETE /books/delete/${id}
 ```
 
 | Parameter | Type     | Description                                                                                                                                                                   |
