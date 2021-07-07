@@ -1,8 +1,10 @@
 const express = require('express')
 const mongoose = require('mongoose')
+require('dotenv').config()
 
 // Primary routes
 const BookRoutes = require('./routes/Books')
+const AuthRoutes = require('./routes/Auth')
 
 const app = express()
 
@@ -10,29 +12,27 @@ const app = express()
 app.use(express.json())
 
 // Database
-// Note: If you want to run the REST API locally without Docker, use connectionLink: mongodb://mongo:27017/library instead.
-const connectionLink = 'mongodb://mongo:27017/library'
+const connectionLink = process.env.DB_URL
 
 mongoose
-    .connect(connectionLink, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    })
-    .catch((err) => console.log(err))
+	.connect(connectionLink, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+	})
+	.catch((err) => console.log(err))
 
 const db = mongoose.connection
 db.once('open', () => {
-    console.log('MongoDB up and running')
+	console.log('MongoDB up and running')
 })
 
-// Routes
-app.get('/', (_, res) => {
-    res.send('Hello world!')
+// Home route
+app.get('/api', (_, res) => {
+	res.send('Hello world!')
 })
 
-app.use('/books', BookRoutes)
+// Route middleware
+app.use('/api/books', BookRoutes)
+app.use('/api/user/', AuthRoutes)
 
-// App start
-const port = 3000
-
-app.listen(port, console.log(`Server started!`))
+app.listen(process.env.PORT, console.log(`Server started!`))
