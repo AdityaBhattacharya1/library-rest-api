@@ -23,8 +23,8 @@ const createAccountLimiter = rateLimit({
 })
 
 // Primary routes
-const BookRoutes = require('./routes/Books')
-const AuthRoutes = require('./routes/Auth')
+const BookRoutes = require('./src/routes/Books')
+const AuthRoutes = require('./src/routes/Auth')
 
 const app = express()
 

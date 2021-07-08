@@ -25,8 +25,6 @@ A sample rest API for a hypothetical library.
 -   **Mongoose**
 -   **Docker**
 
-<br />
-
 # Features
 
 -   **NoSQL database**: [MongoDB](https://www.mongodb.com) object data modeling using [Mongoose](https://mongoosejs.com)
@@ -55,6 +53,9 @@ JWT_SECRET=samplepasswordwhichisdefinitelynotmyrealpassword
 
 # Expiration limit of JWT tokens.
 JWT_EXPIRE_TIME=1h
+
+# Number of salt rounds used in hashing the passwords
+SALT_ROUNDS=5
 ```
 
 A sample .env is present in the root of the project as [`.sample.env`](.sample.env)
@@ -128,8 +129,6 @@ Rate limits have been put in place in order to control the amount of incoming re
 ```
   git clone https://github.com/AdityaBhattacharya1/library-rest-api
 ```
-
-<br />
 
 # To Start
 
