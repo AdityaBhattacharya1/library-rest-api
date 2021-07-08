@@ -2,8 +2,6 @@
 
 A sample rest API for a hypothetical library.
 
-<br />
-
 # Table of Contents
 
 -   [Technologies Used](#tech-used)
