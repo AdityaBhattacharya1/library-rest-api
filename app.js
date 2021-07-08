@@ -1,6 +1,26 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const helmet = require('helmet')
+const xss = require('xss-clean')
+const mongoSanitize = require('express-mongo-sanitize')
+const compression = require('compression')
+const cors = require('cors')
+const rateLimit = require('express-rate-limit')
+
+// configure dotenv
 require('dotenv').config()
+
+const defaultLimiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	max: 10, // limit each IP to 100 requests per windowMs
+})
+
+const createAccountLimiter = rateLimit({
+	windowMs: 60 * 60 * 1000, // 1 hour window
+	max: 5, // start blocking after 5 requests
+	message:
+		'Too many accounts created from this IP, please try again after an hour',
+})
 
 // Primary routes
 const BookRoutes = require('./routes/Books')
@@ -9,7 +29,22 @@ const AuthRoutes = require('./routes/Auth')
 const app = express()
 
 // Middleware
+
 app.use(express.json())
+
+// set security HTTP headers
+app.use(helmet())
+
+// sanitize request data
+app.use(xss())
+app.use(mongoSanitize())
+
+// enable cors
+app.use(cors())
+app.options('*', cors())
+
+// enable gzip compression
+app.use(compression())
 
 // Database
 const connectionLink = process.env.DB_URL
@@ -32,7 +67,7 @@ app.get('/api', (_, res) => {
 })
 
 // Route middleware
-app.use('/api/books', BookRoutes)
-app.use('/api/user/', AuthRoutes)
+app.use('/api/books', defaultLimiter, BookRoutes)
+app.use('/api/user/', createAccountLimiter, AuthRoutes)
 
 app.listen(process.env.PORT, console.log(`Server started!`))
