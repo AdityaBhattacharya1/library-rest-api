@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Book = require('../models/Books')
-const verify = require('../utils/verifyToken')
+const verify = require('../middleware/verifyToken')
 const { bookValidation } = require('../utils/validation')
 
 /*

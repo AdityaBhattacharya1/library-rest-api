@@ -70,4 +70,4 @@ app.get('/api', (_, res) => {
 app.use('/api/books', defaultLimiter, BookRoutes)
 app.use('/api/user/', createAccountLimiter, AuthRoutes)
 
-app.listen(process.env.PORT, console.log(`Server started!`))
+app.listen(process.env.PORT || 8000, console.log(`Server started!`))
