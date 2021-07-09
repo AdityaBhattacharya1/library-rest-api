@@ -183,7 +183,6 @@ Contributions are more than welcome! Please check out the [contributing guide](C
 
 # TODO:
 
--   Add tests
 -   Add more user routes (forgot password, reset password, etc.)
 -   Add user roles
 -   Update API docs

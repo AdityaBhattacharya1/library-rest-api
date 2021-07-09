@@ -12,8 +12,8 @@ router.post('/register', async (req, res) => {
 	const emailExists = await User.findOne({ email: req.body.email })
 	if (emailExists) return res.status(400).send('Email already exists!')
 
-	// hash the password
-	const salt = await bcrypt.genSalt(process.env.SALT_ROUNDS)
+	// hash the password (convert it to Number since dotenv by default converts to Strings)
+	const salt = await bcrypt.genSalt(Number(process.env.SALT_ROUNDS))
 	const hashedPassword = await bcrypt.hash(req.body.password, salt)
 
 	// create new user
@@ -24,7 +24,7 @@ router.post('/register', async (req, res) => {
 	})
 	try {
 		const savedUser = await user.save()
-		res.send(savedUser)
+		res.status(201).send(savedUser)
 	} catch (err) {
 		res.status(400).send(err)
 	}

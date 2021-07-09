@@ -2,9 +2,10 @@
 	"name": "library-rest-api",
 	"version": "1.0.0",
 	"description": "A sample rest API for a hypothetical library",
-	"main": "app.js",
+	"main": "server.js",
 	"scripts": {
-		"dev": "nodemon app.js"
+		"dev": "nodemon server.js",
+		"test": "jest --watch"
 	},
 	"author": "Aditya Bhattacharya",
 	"license": "MIT",
@@ -23,6 +24,7 @@
 		"xss-clean": "^0.1.1"
 	},
 	"devDependencies": {
+		"faker": "^5.5.3",
 		"jest": "^27.0.6",
 		"nodemon": "^2.0.7",
 		"supertest": "^6.1.3"

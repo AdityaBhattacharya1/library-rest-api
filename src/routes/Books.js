@@ -26,8 +26,12 @@ router.get('/', async (_, res) => {
 
 // 2. Get book by id (GET)
 router.get('/get/:id', async (req, res) => {
-	const specificBook = await Book.findById({ _id: req.params.id })
-	res.json(specificBook)
+	try {
+		const specificBook = await Book.findById({ _id: req.params.id })
+		res.json(specificBook)
+	} catch (err) {
+		return res.send([])
+	}
 })
 
 // 3. Get book by author's name (GET)
@@ -77,6 +81,10 @@ router.get('/random', async (_, res) => {
 	const count = await Book.countDocuments()
 	const random = Math.floor(Math.random() * count)
 	const bookName = await Book.findOne().skip(random)
+
+	// if there are no books in the DB, null would be returned as a bookName.
+	// Since that is undesired, we send an empty array.
+	if (bookName === null) return res.send([])
 
 	res.json(bookName)
 })

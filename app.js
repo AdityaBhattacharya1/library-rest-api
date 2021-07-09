@@ -1,11 +1,11 @@
 const express = require('express')
-const mongoose = require('mongoose')
 const helmet = require('helmet')
 const xss = require('xss-clean')
 const mongoSanitize = require('express-mongo-sanitize')
 const compression = require('compression')
 const cors = require('cors')
 const rateLimit = require('express-rate-limit')
+const mongoose = require('mongoose')
 
 // configure dotenv
 require('dotenv').config()
@@ -57,9 +57,12 @@ mongoose
 	.catch((err) => console.log(err))
 
 const db = mongoose.connection
-db.once('open', () => {
-	console.log('MongoDB up and running')
-})
+
+if (process.env.NODE_ENV !== 'test') {
+	db.once('open', () => {
+		console.log('MongoDB up and running')
+	})
+}
 
 // Home route
 app.get('/api', (_, res) => {
@@ -67,7 +70,7 @@ app.get('/api', (_, res) => {
 })
 
 // Route middleware
-app.use('/api/books', defaultLimiter, BookRoutes)
+app.use('/api/books/', defaultLimiter, BookRoutes)
 app.use('/api/user/', createAccountLimiter, AuthRoutes)
 
-app.listen(process.env.PORT || 8000, console.log(`Server started!`))
+module.exports = app
