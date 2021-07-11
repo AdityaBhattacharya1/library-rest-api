@@ -23,8 +23,6 @@ jobs:
               run: npm ci
             - name: Run npm dev server
               run: npm run dev
-            - name: Run `npm test:actions`
-              run: npm run test:actions
               env:
                   CI: true
                   DB_URL: mongodb://localhost:27017/library
@@ -33,3 +31,5 @@ jobs:
                   JWT_SECRET: samplecitestsecrethahajkjkunless??
                   JWT_EXPIRE_TIME: 1h
                   SALT_ROUNDS: 10
+            - name: Run `npm test:actions`
+              run: npm run test:actions
