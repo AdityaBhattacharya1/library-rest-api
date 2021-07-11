@@ -5,7 +5,8 @@
 	"main": "server.js",
 	"scripts": {
 		"dev": "nodemon server.js",
-		"test": "jest --watch"
+		"test:active": "jest --watch",
+		"test:ci": "jest"
 	},
 	"author": "Aditya Bhattacharya",
 	"license": "MIT",

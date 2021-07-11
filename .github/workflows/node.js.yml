@@ -3,32 +3,33 @@ name: Node.js CI
 on: [push]
 
 jobs:
-  build:
+    build:
+        runs-on: ubuntu-latest
 
-    runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [14.x, 16.x]
 
-    strategy:
-      matrix:
-        node-version: [10.x, 12.x]
-
-    steps:
-    - name: Checkout repo
-      uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Create mongoDB Docker container for API testing
-      uses: DigiPie/mongo-action@v1.0.1
-    - name: Install npm packages
-      run: npm ci
-    - name: Run `npm test`
-      run: npm test
-      env:
-        CI: true
-        DB_URL: mongodb://localhost:27017/library
-        NODE_ENV: production
-        PORT: 3000
-        JWT_SECRET: samplecitestsecrethahajkjkunless??
-        JWT_EXPIRE_TIME: 1h
-        SALT_ROUNDS: 10
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v2
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v1
+              with:
+                  node-version: ${{ matrix.node-version }}
+            - name: Create mongoDB Docker container for API testing
+              uses: DigiPie/mongo-action@v1.0.1
+            - name: Install npm packages
+              run: npm ci
+            - name: Run npm dev server
+              run: npm ci
+            - name: Run `npm test:ci`
+              run: npm test
+              env:
+                  CI: true
+                  DB_URL: mongodb://localhost:27017/library
+                  NODE_ENV: production
+                  PORT: 3000
+                  JWT_SECRET: samplecitestsecrethahajkjkunless??
+                  JWT_EXPIRE_TIME: 1h
+                  SALT_ROUNDS: 10
