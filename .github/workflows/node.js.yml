@@ -25,8 +25,9 @@ jobs:
                   mongodb-version: ${{ matrix.mongodb-version }}
 
             - run: npm ci
+                  npm run dev
 
-            - run: npm test
+            - run: npm run test
               env: PORT=3000
                   JWT_SECRET=citestjwtsecret
                   JWT_EXPIRE_TIME=1h
