@@ -7,8 +7,8 @@
 		"dev": "nodemon server.js",
 		"start": "node server.js",
 		"test:watch": "jest --watch",
-		"test:actions": "jest --runInBand --forceExit",
-		"coverage": "jest -i --coverage --colors --forceExit"
+		"test:actions": "jest --runInBand",
+		"coverage": "jest -i --coverage --colors"
 	},
 	"author": "Aditya Bhattacharya",
 	"license": "MIT",

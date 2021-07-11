@@ -8,8 +8,7 @@ branches:
     only:
         - main
 env:
-    global: 
-        NODE_ENV=test
+    global: NODE_ENV=test
         DB_URL=mongodb://localhost:27017/library
         PORT=3000
         JWT_SECRET=samplecitestingsecrethahajkjkunless??
