@@ -22,7 +22,7 @@ jobs:
             - name: Install npm packages
               run: npm ci
             - name: Run npm dev server
-              run: node server.js
+              run: nohup node server.js
               env:
                   CI: true
                   DB_URL: mongodb://localhost:27017/library
