@@ -6,7 +6,7 @@ services:
 cache: npm
 branches:
     only:
-        - master
+        - main
 env:
     global: 
         NODE_ENV=test
