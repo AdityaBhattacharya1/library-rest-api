@@ -1,0 +1,20 @@
+language: node_js
+node_js:
+    - '14'
+services:
+    - mongodb
+cache: npm
+branches:
+    only:
+        - master
+env:
+    global: 
+        NODE_ENV=test
+        DB_URL=mongodb://localhost:27017/library
+        PORT=3000
+        JWT_SECRET=samplecitestingsecrethahajkjkunless??
+        JWT_EXPIRE_TIME=1h
+        SALT_ROUNDS=10
+script:
+    - npm run test:actions
+after_success: npm run coverage

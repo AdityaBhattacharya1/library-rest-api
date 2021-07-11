@@ -17,7 +17,6 @@ describe('Auth tests', () => {
 	})
 	afterEach(() => {
 		User.deleteMany({ email: { $eq: 'testing@testtest.com' } })
-		console.log('delete all test accounts')
 	})
 	afterAll(async () => {
 		await mongoose.connection.close()
