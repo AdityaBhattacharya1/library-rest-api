@@ -22,7 +22,11 @@ jobs:
             - name: Install npm packages
               run: npm ci
             - name: Run npm dev server
-              run: node server.js && npm run test:actions
+              run: |
+                  echo "server started"
+                  node server.js
+                  echo "test started"
+                  npm run test:actions
               env:
                   CI: true
                   DB_URL: mongodb://localhost:27017/library
