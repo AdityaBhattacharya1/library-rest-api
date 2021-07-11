@@ -6,6 +6,7 @@ const compression = require('compression')
 const cors = require('cors')
 const rateLimit = require('express-rate-limit')
 const mongoose = require('mongoose')
+const { logToConsole } = require('./src/utils/logToConsole')
 
 // configure dotenv
 require('dotenv').config()
@@ -54,13 +55,13 @@ mongoose
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 	})
-	.catch((err) => console.log(err))
+	.catch((err) => logToConsole(err))
 
 const db = mongoose.connection
 
 if (process.env.NODE_ENV !== 'test') {
 	db.once('open', () => {
-		console.log('MongoDB up and running')
+		logToConsole('MongoDB up and running')
 	})
 }
 
