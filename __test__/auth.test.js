@@ -1,9 +1,12 @@
 const app = require('../app')
 const supertest = require('supertest')
 const request = supertest(app)
+const mongoose = require('mongoose')
 const Books = require('../src/models/Books')
 const User = require('../src/models/User')
+
 const { testDBSetup } = require('../src/utils/testDBSetup')
+
 process.env.NODE_ENV = 'test'
 
 describe('Auth tests', () => {
@@ -15,6 +18,9 @@ describe('Auth tests', () => {
 	afterEach(() => {
 		User.deleteMany({ email: { $eq: 'testing@testtest.com' } })
 		console.log('delete all test accounts')
+	})
+	afterAll(async () => {
+		await mongoose.connection.close()
 	})
 	it('should return a 400 response', async () => {
 		const res = await request.post('/api/user/login')

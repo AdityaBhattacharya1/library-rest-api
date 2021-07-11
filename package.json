@@ -5,8 +5,10 @@
 	"main": "server.js",
 	"scripts": {
 		"dev": "nodemon server.js",
+		"start": "node server.js",
 		"test:watch": "jest --watch",
-		"test:actions": "jest"
+		"test:actions": "jest --runInBand --forceExit",
+		"ci": "start-server-and-test start http://localhost:3000/api test:actions"
 	},
 	"author": "Aditya Bhattacharya",
 	"license": "MIT",
@@ -28,6 +30,7 @@
 		"faker": "^5.5.3",
 		"jest": "^27.0.6",
 		"nodemon": "^2.0.7",
+		"start-server-and-test": "^1.12.6",
 		"supertest": "^6.1.3"
 	}
 }
