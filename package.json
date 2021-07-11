@@ -8,8 +8,7 @@
 		"start": "node server.js",
 		"test:watch": "jest --watch",
 		"test:actions": "jest --runInBand --forceExit",
-		"ci": "start-server-and-test start http://localhost:3000/api test:actions",
-		"coverage": "jest -i --coverage --colors"
+		"coverage": "jest -i --coverage --colors --forceExit"
 	},
 	"author": "Aditya Bhattacharya",
 	"license": "MIT",
