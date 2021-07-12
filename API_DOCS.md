@@ -1,9 +1,13 @@
 # API Documentation
 
+# General Routes
+
+These routes do not require any prior authentication. Refer to the [Rate Limiting](README.md/#rate-limit) section in the [README](README.md) file for information on the rate limits for these routes.
+
 ## Home Route
 
 ```http
-  GET /
+  GET /api/
 ```
 
 | Parameter | Type  | Description                                   |
@@ -16,7 +20,7 @@
 ## Get All Books
 
 ```http
-  GET /books/
+  GET /api/books/
 ```
 
 | Parameter | Type  | Description                                         |
@@ -29,7 +33,7 @@
 ## Get Books By ID
 
 ```http
-  GET /books/${id}
+  GET /api/books/${id}
 ```
 
 | Parameter | Type  | Description                                                                           |
@@ -38,7 +42,7 @@
 
 Example:
 
-```
+```http
   http://localhost:3000/books/get/5099803df3f4948bd2f98391
 ```
 
@@ -48,7 +52,7 @@ Example:
 ## Get All Books By Certain Author
 
 ```http
-  GET /books/author/${name}
+  GET /api/books/author/${name}
 ```
 
 | Parameter | Type  | Description                                                                                                                                                      |
@@ -61,8 +65,8 @@ Example:
 
 Input:
 
-```
-  // A book authored by Dan Brown is already stored in the DB
+```sh
+ # A book authored by Dan Brown is already stored in the DB
   http://localhost:3000/books/author/Dan-Brown
 ```
 
@@ -70,18 +74,18 @@ Output: <br />
 
 1. Single Entry
 
-```
-  {
-    "title": "The Da Vinci Code",
-    "author": "Dan Brown",
-    "description": "..."
+```json
+{
+	"title": "The Da Vinci Code",
+	"author": "Dan Brown",
+	"description": "..."
 }
 ```
 
 2. Multiple Entries
 
-```
-  [
+```json
+[
   {
     "title": "The Da Vinci Code",
     "author": "Dan Brown",
@@ -104,10 +108,27 @@ Output: <br />
 <hr />
 <br />
 
+## Get Random Book
+
+```http
+  GET /api/books/random
+```
+
+| Parameter | Type  | Description                                                                                                              |
+| :-------- | :---- | :----------------------------------------------------------------------------------------------------------------------- |
+| None      | `GET` | Fetches a random book from the database (Assuming that there are books stored in the DB, else returns empty JSON object) |
+
+<hr />
+<br />
+
+# Auth routes
+
+These routes require prior authentication. Refer to the [Rate Limiting](README.md/#rate-limit) section in the [README](README.md) file for information on the rate limits for these routes.
+
 ## Create New Entry Of Book
 
 ```http
-  POST /books/new
+  POST /api/books/new
 ```
 
 | Parameter | Type   | Description                                                             |
@@ -120,7 +141,7 @@ Output: <br />
 ## Update Book Data
 
 ```http
-  PATCH /books/update/${id}
+  PATCH /api/books/update/${id}
 ```
 
 | Parameter | Type    | Description                                                                                                              |
@@ -134,12 +155,13 @@ Example:
   http://localhost:3000/books/update/5099803df3f4948bd2f98391
 ```
 
-<hr /><br />
+<hr />
+<br />
 
 ## Delete Book
 
 ```http
-  DELETE /books/delete/${id}
+  DELETE /api/books/delete/${id}
 ```
 
 | Parameter | Type     | Description                                                                                                                                                                   |
@@ -148,22 +170,101 @@ Example:
 
 Example:
 
-```
-// Before making the request, ensure that you include the updated data in the request body.
+```sh
+# Before making the request, ensure that you include the updated data in the request body.
   http://localhost:3000/books/delete/5099803df3f4948bd2f98391
 ```
 
-<hr /><br />
+<hr />
+<br />
 
-## Get Random Book
+# User Routes
 
-```http
-  GET /books/random
+These routes are used to create and access users in the DB. Refer to the [Rate Limiting](README.md/#rate-limit) section in the [README](README.md) file for information on the rate limits for these routes.
+
+**NOTE**:
+
+-   For registering the user, the request body should be in the following format:
+
+```json
+{
+	"name": "sample name",
+	"email": "valid_email@test.com",
+	"password": "extremelysecurepassword"
+}
 ```
 
-| Parameter | Type  | Description                                                                                                              |
-| :-------- | :---- | :----------------------------------------------------------------------------------------------------------------------- |
-| None      | `GET` | Fetches a random book from the database (Assuming that there are books stored in the DB, else returns empty JSON object) |
+-   For logging in, the request body should be in the following format:
+
+```json
+{
+	"email": "valid_email@test.com",
+	"password": "extremelysecurepassword"
+}
+```
+
+-   The following are the validation thresholds. If these thresholds are not met, an error with status Bad Request (201) will be thrown.
+
+```js
+  name: {
+    		type: String,
+    		required: true,
+    		min: 6,
+    		max: 255,
+    	},
+  email: {
+    		type: String,
+    		required: true,
+    		max: 255,
+    		min: 6,
+    	},
+  password: {
+    		type: String,
+    		required: true,
+    		min: 8,
+    	}
+```
+
+## Register User
+
+```http
+  POST api/user/register/
+```
+
+| Parameter | Type   | Description                  |
+| :-------- | :----- | :--------------------------- |
+| None      | `POST` | Create a new user in the DB. |
+
+Example:
+
+```sh
+# Before making the request, ensure that you include the details of the user in the request body.
+  http://localhost:3000/api/users/register
+```
+
+<hr />
+<br />
+
+## Login User
+
+```http
+  POST api/user/login
+```
+
+| Parameter | Type   | Description  |
+| :-------- | :----- | :----------- |
+| None      | `POST` | Login users. |
+
+Example:
+
+```sh
+# Before making the request, ensure that you include the details of the user in the request body.
+  http://localhost:3000/api/users/register
+```
+
+You should receive a JWT token as a response on successfully signing in. You can then access the auth routes by setting an `auth-token` header with the JWT token as its value in the request.
+
+**NOTE**: The JWT tokens will expire after 1 hour (by default. You can change this behaviour by updating the `JWT_TOKEN_EXPIRY` in the `.env` file). In order to refresh the token, you will have to successfully sign in.
 
 <hr />
 <br />

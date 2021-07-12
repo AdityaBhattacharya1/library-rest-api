@@ -48,8 +48,14 @@ A sample rest API for a hypothetical library.
 # Environmental Variables
 
 ```bash
+# Node environment
+NODE_ENV=production || dev || test
+
 # URL of the MongoDB
 DB_URL=mongodb://localhost:27017/library
+
+# URL of the production DB (used when NODE_ENV is set to 'production')
+PROD_DB_URL=mongodb+srv://sampledburl
 
 # Port number (defaults to 8000 in case the port value is not specified)
 PORT=3000
@@ -69,11 +75,16 @@ A sample .env is present in the root of the project as [`.sample.env`](.sample.e
 # Project Structure
 
 ```
- |--models\         # Mongoose models (data layer)
- |--routes\         # Routes
- |--utils\          # Utility functions
- |--app.js          # Express app
- |--server.js       # REST API entry point
+ |--__test__\              # Tests
+ |--.github\               # Github workflows
+ |--src\                   # Source folder - contains the models, configs, utils and controllers
+        |--config\         # Config files
+        |--middleware\     # Config files
+        |--models\         # Mongoose models (data layer)
+        |--routes\         # Routes
+        |--utils\          # Utility functions
+ |--app.js                 # Express app
+ |--server.js              # REST API entry point
 ```
 
 # API Documentation
@@ -124,12 +135,13 @@ An access token is valid for 1 hour. You can modify this expiration time by chan
 
 **Refreshing Access Tokens**:
 
-You can refresh your access token by simply making a successful to the login (`POST /api/user/login`) endpoint.
+You can refresh your access token by simply making a successful `POST` request to the login (`POST /api/user/login`) endpoint.
 
 # Rate Limit
 
-Rate limits have been put in place in order to control the amount of incoming requests to the server.
-**General and Auth routes**: 100 requests / 15 minutes
+Rate limits have been put in place in order to control the amount of incoming requests **from a single IP address** to the server.\
+**General and Auth routes**: 100 requests / 15 minutes for a single IP address\
+**Register route**: 5 requests / 1 hr for a single IP address
 
 # Linting
 
@@ -151,13 +163,13 @@ To prevent a certain file or directory from being linted, add it to `.eslintigno
 
 ```sh
 # run all tests
-npm test
+npm run test
 
 # run all tests in watch mode
-npm test:watch
+npm run test:watch
 
 # run test coverage
-npm coverage
+npm run coverage
 ```
 
 # To Clone
@@ -170,7 +182,7 @@ npm coverage
 
 ## Requirements
 
--   [mongoDB](https://docs.mongodb.com/manual/installation/)
+-   [MongoDB](https://docs.mongodb.com/manual/installation/)
 -   [Docker](https://www.docker.com/get-started)
 
 ```bash
@@ -215,8 +227,8 @@ docker-compose build
 On success -
 
 ```bash
-[DEBUG] default - Server started
-[DEBUG] default - MongoDB up and running
+[DEBUG] Output - Server started
+[DEBUG] Output - MongoDB up and running
 ```
 
 If you run it **without** docker, the server should be up at port **3000** of localhost. <br />
