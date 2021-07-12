@@ -2,15 +2,13 @@ const app = require('../app')
 const supertest = require('supertest')
 const request = supertest(app)
 const mongoose = require('mongoose')
-const Books = require('../src/models/Books')
 const User = require('../src/models/User')
 
-const { testDBSetup } = require('../src/utils/testDBSetup')
+const { createTestUser } = require('../src/utils/testDBSetup')
 
 describe('Auth tests', () => {
 	beforeAll(() => {
-		Books.deleteMany({})
-		testDBSetup()
+		createTestUser()
 	})
 
 	afterAll(async () => {

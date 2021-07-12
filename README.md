@@ -248,7 +248,4 @@ If you want to contribute to the project, feel free to do so.
 
 [MIT](LICENSE)
 
-# TODO:
 
--   Add more user routes (forgot password, reset password, etc.)
--   Add user roles
