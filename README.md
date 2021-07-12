@@ -179,6 +179,7 @@ mongod
 ```
 
 ```bash
+# run normally
 npm install
 npm run dev
 ```
@@ -186,28 +187,40 @@ npm run dev
   <h3>OR</h3>
 
 ```bash
+# run in a docker container using the npm script provided
+npm run docker
+```
+
+<h3>OR</h3>
+
+```bash
+# using docker commands
 # use -d flag to run in background
 docker-compose up
 
 # Tear down
+
 docker-compose down
 
 # To be able to edit files, add volume to compose file
+
 volumes: ['./:/usr/src/app']
 
 # To re-build
+
 docker-compose build
+
 ```
 
 On success -
 
 ```bash
-Server started! - server has been started
-MongoDB up and running - database server has started
+[DEBUG] default - Server started
+[DEBUG] default - MongoDB up and running
 ```
 
 If you run it **without** docker, the server should be up at port **3000** of localhost. <br />
-If you run it **with** docker, the server should be up at port **8000** of localhost.
+If you run it **with** docker, the server should be up at port **80** of localhost.
 
 # Contributing
 

@@ -9,7 +9,8 @@
 		"test": "jest --i --detectOpenHandles",
 		"coverage": "jest -i --coverage --colors",
 		"lint": "eslint .",
-		"lint:fix": "eslint . --fix"
+		"lint:fix": "eslint . --fix",
+		"docker": "docker-compose up"
 	},
 	"author": "Aditya Bhattacharya",
 	"license": "MIT",

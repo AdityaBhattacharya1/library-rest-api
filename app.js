@@ -45,11 +45,14 @@ app.use(cors())
 app.options('*', cors())
 
 // enable gzip compression
-// (it is not a great idea to use compression since NodeJS takes up a lot of resources due to its single threaded nature)
+// (However, it is not a great idea to use compression since NodeJS takes up a lot of resources due to its single threaded nature)
 app.use(compression())
 
 // Database
-const connectionLink = process.env.DB_URL
+const connectionLink =
+	process.env.NODE_ENV == 'production'
+		? process.env.PROD_DB_URL
+		: process.env.DB_URL
 
 mongoose
 	.connect(connectionLink, {
