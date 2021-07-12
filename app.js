@@ -49,8 +49,9 @@ app.options('*', cors())
 app.use(compression())
 
 // Database
+// if the node env is prod but prod db url is empty then the connection link defaults to the db url
 const connectionLink =
-	process.env.NODE_ENV == 'production'
+	process.env.NODE_ENV === 'production' && process.env.PROD_DB_URL
 		? process.env.PROD_DB_URL
 		: process.env.DB_URL
 

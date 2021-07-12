@@ -252,4 +252,3 @@ If you want to contribute to the project, feel free to do so.
 
 -   Add more user routes (forgot password, reset password, etc.)
 -   Add user roles
--   Update API docs

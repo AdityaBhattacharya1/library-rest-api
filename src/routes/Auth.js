@@ -13,7 +13,7 @@ router.post('/register', async (req, res) => {
 	if (emailExists) return res.status(400).send('Email already exists!')
 
 	// hash the password (convert it to Number since dotenv by default converts to Strings)
-	const salt = await bcrypt.genSalt(Number(process.env.SALT_ROUNDS))
+	const salt = await bcrypt.genSalt(Number(process.env.SALT_ROUNDS || 10))
 	const hashedPassword = await bcrypt.hash(req.body.password, salt)
 
 	// create new user
@@ -45,7 +45,7 @@ router.post('/login', async (req, res) => {
 
 	// Create and assign a token
 	const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-		expiresIn: process.env.JWT_EXPIRE_TIME,
+		expiresIn: process.env.JWT_EXPIRE_TIME || '1h',
 	})
 	res.header('auth-token', token).send(token)
 })
