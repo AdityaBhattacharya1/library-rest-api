@@ -6,7 +6,6 @@ const compression = require('compression')
 const cors = require('cors')
 const rateLimit = require('express-rate-limit')
 const mongoose = require('mongoose')
-const apicache = require('apicache')
 const { logToConsole } = require('./src/utils/logToConsole')
 
 // configure dotenv
@@ -73,9 +72,7 @@ app.get('/api', (_, res) => {
 })
 
 // Route middleware
-// Caching in order to deal with compression issue + minor performance improvements
-let cache = apicache.middleware
-app.use('/api/books/', defaultLimiter, cache('10 minutes'), BookRoutes)
+app.use('/api/books/', defaultLimiter, BookRoutes)
 app.use('/api/user/', createAccountLimiter, AuthRoutes)
 
 module.exports = app

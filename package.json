@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "nodemon server.js",
 		"test:watch": "jest --watch",
-		"test": "jest --i",
+		"test": "jest --i --detectOpenHandles",
 		"coverage": "jest -i --coverage --colors",
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix"
@@ -15,7 +15,6 @@
 	"license": "MIT",
 	"dependencies": {
 		"@hapi/joi": "^17.1.1",
-		"apicache": "^1.6.2",
 		"bcryptjs": "^2.4.3",
 		"compression": "^1.7.4",
 		"cors": "^2.8.5",
