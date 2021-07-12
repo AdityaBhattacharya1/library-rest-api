@@ -49,10 +49,6 @@ app.options('*', cors())
 // (it is not a great idea to use compression since NodeJS takes up a lot of resources due to its single threaded nature)
 app.use(compression())
 
-// Caching in order to deal with compression issue + minor performance improvements
-let cache = apicache.middleware
-app.use(cache('10 minutes'))
-
 // Database
 const connectionLink = process.env.DB_URL
 
@@ -77,7 +73,9 @@ app.get('/api', (_, res) => {
 })
 
 // Route middleware
-app.use('/api/books/', defaultLimiter, BookRoutes)
+// Caching in order to deal with compression issue + minor performance improvements
+let cache = apicache.middleware
+app.use('/api/books/', defaultLimiter, cache('10 minutes'), BookRoutes)
 app.use('/api/user/', createAccountLimiter, AuthRoutes)
 
 module.exports = app

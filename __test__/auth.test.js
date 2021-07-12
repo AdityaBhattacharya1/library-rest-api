@@ -7,12 +7,10 @@ const User = require('../src/models/User')
 
 const { testDBSetup } = require('../src/utils/testDBSetup')
 
-testDBSetup()
-User.deleteMany({ email: { $eq: 'testing@testtest.com' } })
-
 describe('Auth tests', () => {
 	beforeAll(() => {
 		Books.deleteMany({})
+		testDBSetup()
 	})
 
 	afterAll(async () => {
