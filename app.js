@@ -50,7 +50,8 @@ app.options('*', cors())
 app.use(compression())
 
 // Caching in order to deal with compression issue + minor performance improvements
-app.use(apicache('10 minutes'))
+let cache = apicache.middleware
+app.use(cache('10 minutes'))
 
 // Database
 const connectionLink = process.env.DB_URL
