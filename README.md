@@ -11,6 +11,8 @@ A sample rest API for a hypothetical library.
 -   [API Documentation](#api-documentation)
 -   [Authentication](#authentication)
 -   [Rate Limit](#rate-limit)
+-   [Linting](#linting)
+-   [Testing](#testing)
 -   [To Clone](#to-clone)
 -   [To Start](#to-start)
 -   [Contributing](#contributing)
@@ -30,6 +32,8 @@ A sample rest API for a hypothetical library.
 -   **NoSQL database**: [MongoDB](https://www.mongodb.com) object data modeling using [Mongoose](https://mongoosejs.com)
 -   **Authentication and authorization**: using [JWT](https://jwt.io/)
 -   **Validation**: request data validation using [Joi](https://github.com/hapijs/joi)
+-   **Testing**: using [Jest](https://jestjs.io/) and [Supertest](https://www.npmjs.com/package/supertest)
+-   **Logging**: using [log4js-node](https://log4js-node.github.io/log4js-node/)
 -   **Dependency management**: with [NPM](https://npmjs.com)
 -   **Environment variables support**: using [dotenv](https://github.com/motdotla/dotenv)
 -   **Security**: set security HTTP headers using [helmet](https://helmetjs.github.io)
@@ -37,6 +41,8 @@ A sample rest API for a hypothetical library.
 -   **CORS**: Cross-Origin Resource-Sharing enabled using [cors](https://github.com/expressjs/cors)
 -   **Compression**: gzip compression with [compression](https://github.com/expressjs/compression)
 -   **Docker support**
+-   **Continuous Integration**: using [Travis CI](https://travis-ci.org/)
+-   **Linting and code quality plugins**: using [eslint](https://eslint.org/)
 -   **Rate limits**: controlled request inflow using [express-rate-limit](https://www.npmjs.com/package/express-rate-limit)
 
 # Environmental Variables
@@ -66,7 +72,8 @@ A sample .env is present in the root of the project as [`.sample.env`](.sample.e
  |--models\         # Mongoose models (data layer)
  |--routes\         # Routes
  |--utils\          # Utility functions
- |--app.js          # Express app + REST API entry point
+ |--app.js          # Express app
+ |--server.js       # REST API entry point
 ```
 
 # API Documentation
@@ -124,6 +131,35 @@ You can refresh your access token by simply making a successful to the login (`P
 Rate limits have been put in place in order to control the amount of incoming requests to the server.
 **General and Auth routes**: 100 requests / 15 minutes
 
+# Linting
+
+Linting is done using [ESLint](https://eslint.org/).
+
+```sh
+# To run eslint
+npm run lint
+
+# To fix eslint errors
+npm run lint:fix
+```
+
+To modify the ESLint configuration, update the `.eslintrc.json` file.
+
+To prevent a certain file or directory from being linted, add it to `.eslintignore`.
+
+# Testing
+
+```sh
+# run all tests
+npm test
+
+# run all tests in watch mode
+npm test:watch
+
+# run test coverage
+npm coverage
+```
+
 # To Clone
 
 ```
@@ -173,9 +209,15 @@ MongoDB up and running - database server has started
 If you run it **without** docker, the server should be up at port **3000** of localhost. <br />
 If you run it **with** docker, the server should be up at port **8000** of localhost.
 
-## Contributing
+# Contributing
 
-Contributions are more than welcome! Please check out the [contributing guide](CONTRIBUTING.md).
+If you want to contribute to the project, feel free to do so.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## License
 

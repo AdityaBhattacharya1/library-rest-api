@@ -6,6 +6,7 @@ const compression = require('compression')
 const cors = require('cors')
 const rateLimit = require('express-rate-limit')
 const mongoose = require('mongoose')
+const apicache = require('apicache')
 const { logToConsole } = require('./src/utils/logToConsole')
 
 // configure dotenv
@@ -45,7 +46,11 @@ app.use(cors())
 app.options('*', cors())
 
 // enable gzip compression
+// (it is not a great idea to use compression since NodeJS takes up a lot of resources due to its single threaded nature)
 app.use(compression())
+
+// Caching in order to deal with compression issue + minor performance improvements
+app.use(apicache('10 minutes'))
 
 // Database
 const connectionLink = process.env.DB_URL

@@ -15,5 +15,5 @@ env:
         JWT_EXPIRE_TIME=1h
         SALT_ROUNDS=10
 script:
-    - npm run test:ci
+    - npm run test
 after_success: npm run coverage
