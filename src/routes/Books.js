@@ -57,7 +57,7 @@ router.post('/new', verify, async (req, res) => {
 	const newBook = new Book(req.body)
 
 	const savedBook = await newBook.save()
-	res.json(savedBook)
+	res.json(savedBook).status(200)
 })
 
 // 5. Update book content (PATCH)
@@ -65,6 +65,12 @@ router.post('/new', verify, async (req, res) => {
 router.patch('/update/:id', verify, async (req, res) => {
 	const { error } = bookValidation(req.body)
 	if (error) return res.status(400).send(error.details[0].message)
+
+	const checkIfBookExists = await Book.findById(req.params.id)
+
+	if (!checkIfBookExists) {
+		return res.status(400).send('No book found by that ID')
+	}
 
 	const book = await Book.updateOne(
 		{ _id: req.params.id },

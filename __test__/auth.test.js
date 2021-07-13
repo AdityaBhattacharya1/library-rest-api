@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const User = require('../src/models/User')
 
 const { createTestUser } = require('../src/utils/testDBSetup')
+// const { logToConsole } = require('../src/utils/logToConsole')
 
 describe('Auth tests', () => {
 	beforeAll(() => {
@@ -76,6 +77,38 @@ describe('Auth tests', () => {
 			.expect((response) => (response.body = 'Access denied!'))
 
 		expect(res.status).toBe(401)
+	})
+
+	it('Should return the appropriate responses instead of 401s', async () => {
+		const testUser = {
+			email: 'testing2@testtest.com',
+			password: 'totallysecurepasswordnohaxpls',
+		}
+
+		const response = await request.post('/api/user/login').send(testUser)
+
+		// logToConsole(response)
+
+		await request
+			.post('/api/books/new')
+			.set('auth-token', response.text)
+			.send({
+				title: 'Test title',
+				author: 'me',
+				description: 'Hello world!',
+			})
+			.expect(200)
+
+		await request
+			.patch('/api/books/update/nonexistentbook')
+			.set('auth-token', response.text)
+			.expect(400)
+
+		await request
+			.delete('/api/books/delete/nonexistentbook')
+			.set('auth-token', response.text)
+			.expect(400)
+			.expect('Could not find a book by that ID')
 	})
 
 	it('should return a 401 response as there is no auth token being passed', async () => {
