@@ -4,6 +4,7 @@ const { registerValidation, loginValidation } = require('../utils/validation')
 const logger = require('../config/logger')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const { logToConsole } = require('../utils/logToConsole')
 
 router.post('/register', async (req, res) => {
 	const { error } = registerValidation(req.body)
@@ -25,7 +26,8 @@ router.post('/register', async (req, res) => {
 	})
 	try {
 		const savedUser = await user.save()
-		res.status(201).send(savedUser)
+		logToConsole(savedUser)
+		res.status(201).send('User created successfully!')
 	} catch (err) {
 		logger.error(err)
 		res.status(400).send(

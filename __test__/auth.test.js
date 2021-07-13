@@ -13,6 +13,7 @@ describe('Auth tests', () => {
 
 	afterAll(async () => {
 		await User.deleteMany({ email: { $eq: 'testing@testtest.com' } })
+		await User.deleteMany({ email: { $eq: 'testing2@testtest.com' } })
 		await mongoose.connection.close()
 	})
 
@@ -39,20 +40,56 @@ describe('Auth tests', () => {
 		expect(res.status).toBe(400)
 	})
 
+	it('should return a 400 response as no request body is being passed', async () => {
+		const testUser = {
+			name: 'Testing',
+			email: 'testing@testtest.com',
+			password: 'totallysecurepasswordnohaxpls',
+		}
+		const res = await request
+			.post('/api/user/register')
+			.send(testUser)
+			.expect((response) => (response.body = 'Email already exists!'))
+
+		expect(res.status).toBe(400)
+	})
+
+	it('should return a 201 response as no request body is being passed', async () => {
+		const testUser = {
+			name: 'Testing',
+			email: 'testing2@testtest.com',
+			password: 'totallysecurepasswordnohaxpls',
+		}
+		const res = await request
+			.post('/api/user/register')
+			.send(testUser)
+			.expect(
+				(response) => (response.body = 'User created successfully!')
+			)
+
+		expect(res.status).toBe(201)
+	})
+
 	it('should return a 401 response as there is no auth token being passed', async () => {
-		const res = await request.post('/api/books/new')
+		const res = await request
+			.post('/api/books/new')
+			.expect((response) => (response.body = 'Access denied!'))
 
 		expect(res.status).toBe(401)
 	})
 
-	it('should return a 401 response', async () => {
-		const res = await request.patch('/api/books/update/nonexistentbook')
+	it('should return a 401 response as there is no auth token being passed', async () => {
+		const res = await request
+			.patch('/api/books/update/nonexistentbook')
+			.expect((response) => (response.body = 'Access denied!'))
 
 		expect(res.status).toBe(401)
 	})
 
-	it('should return a 401 response', async () => {
-		const res = await request.delete('/api/books/delete/nonexistentbook')
+	it('should return a 401 response as there is no auth token being passed', async () => {
+		const res = await request
+			.delete('/api/books/delete/nonexistentbook')
+			.expect((response) => (response.body = 'Access denied!'))
 
 		expect(res.status).toBe(401)
 	})

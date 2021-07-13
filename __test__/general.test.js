@@ -16,11 +16,18 @@ describe('test', () => {
 		await mongoose.connection.close()
 	})
 
+	it('Should have a response body of "Hello world!"', async () => {
+		const res = await request
+			.get('/api')
+			.expect((response) => (response.body = 'Hello world!'))
+
+		expect(res.status).toBe(200)
+	})
+
 	it('Should get 2 books from the books endpoint', async () => {
 		const res = await request
 			.get('/api/books/')
 			.expect('Content-Type', /json/)
-			.expect('Content-Length', '425')
 
 		expect(res.status).toBe(200)
 	})

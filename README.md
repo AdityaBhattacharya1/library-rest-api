@@ -37,7 +37,7 @@ A sample rest API for a hypothetical library.
 -   **Dependency management**: with [NPM](https://npmjs.com)
 -   **Environment variables support**: using [dotenv](https://github.com/motdotla/dotenv)
 -   **Security**: set security HTTP headers using [helmet](https://helmetjs.github.io)
--   **Santizing**: sanitize request data against XSS and query injection
+-   **Sanitizing**: sanitize request data against XSS and query injection
 -   **CORS**: Cross-Origin Resource-Sharing enabled using [cors](https://github.com/expressjs/cors)
 -   **Compression**: gzip compression with [compression](https://github.com/expressjs/compression)
 -   **Docker support**
@@ -247,5 +247,3 @@ If you want to contribute to the project, feel free to do so.
 ## License
 
 [MIT](LICENSE)
-
-

@@ -7,6 +7,7 @@ const cors = require('cors')
 const rateLimit = require('express-rate-limit')
 const mongoose = require('mongoose')
 const { logToConsole } = require('./src/utils/logToConsole')
+const logger = require('./src/config/logger')
 
 // configure dotenv
 require('dotenv').config()
@@ -61,15 +62,13 @@ mongoose
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 	})
-	.catch((err) => logToConsole(err))
+	.catch((err) => logger.error(err))
 
 const db = mongoose.connection
 
-if (process.env.NODE_ENV !== 'test') {
-	db.once('open', () => {
-		logToConsole('MongoDB up and running')
-	})
-}
+db.once('open', () => {
+	logToConsole('MongoDB up and running')
+})
 
 // Home route
 app.get('/api', (_, res) => {
