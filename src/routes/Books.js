@@ -19,8 +19,15 @@ Key
 */
 
 // 1. Get all books (GET)
-router.get('/', async (_, res) => {
-	const books = await Book.find()
+router.get('/:title?', async (req, res) => {
+	let books
+	if (req.params.title) {
+		books = await Book.find({
+			title: { $regex: req.params.title, $options: 'i' },
+		})
+	} else {
+		books = await Book.find()
+	}
 	res.json(books)
 })
 
