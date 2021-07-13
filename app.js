@@ -38,6 +38,7 @@ app.use(helmet())
 
 // sanitize request data
 app.use(xss())
+// Chances are that the validation middleware will do a lot in preventing injections
 app.use(mongoSanitize())
 
 // enable cors

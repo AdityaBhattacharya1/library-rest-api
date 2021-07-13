@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const User = require('../models/User')
 const { registerValidation, loginValidation } = require('../utils/validation')
+const logger = require('../config/logger')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
@@ -26,7 +27,10 @@ router.post('/register', async (req, res) => {
 		const savedUser = await user.save()
 		res.status(201).send(savedUser)
 	} catch (err) {
-		res.status(400).send(err)
+		logger.error(err)
+		res.status(400).send(
+			'An error occurred in account creation. Please try again.'
+		)
 	}
 })
 
