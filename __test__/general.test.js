@@ -6,7 +6,7 @@ const mongoose = require('mongoose')
 
 const { createTestBooks } = require('../src/utils/testDBSetup')
 
-describe('test', () => {
+describe('General routes test', () => {
 	beforeEach(() => {
 		createTestBooks()
 	})
