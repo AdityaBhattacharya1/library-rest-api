@@ -3,6 +3,7 @@ const router = express.Router()
 const Book = require('../models/Books')
 const verify = require('../middleware/verifyToken')
 const { bookValidation } = require('../utils/validation')
+// const { logToConsole } = require('../utils/logToConsole')
 
 /*
 Key
@@ -14,7 +15,6 @@ Key
     4. Create new entry of book (POST) - Auth protected
     5. Update book content (PATCH) - Auth protected
     6. Delete entry of book (DELETE) - Auth protected
-    7. Get random book (GET)
 
 */
 
@@ -69,7 +69,7 @@ router.patch('/update/:id', verify, async (req, res) => {
 	const checkIfBookExists = await Book.findById(req.params.id)
 
 	if (!checkIfBookExists) {
-		return res.status(400).send('No book found by that ID')
+		return res.status(404).send('No book found by that ID')
 	}
 
 	const book = await Book.updateOne(
@@ -85,21 +85,8 @@ router.delete('/delete/:id', verify, async (req, res) => {
 		const result = await Book.findByIdAndDelete(req.params.id)
 		res.json(result)
 	} catch (err) {
-		res.status(400).send('Could not find a book by that ID')
+		res.status(404).send('Could not find a book by that ID')
 	}
-})
-
-// 7. Get random book (GET)
-router.get('/random', async (_, res) => {
-	const count = await Book.countDocuments()
-	const random = Math.floor(Math.random() * count)
-	const bookName = await Book.findOne().skip(random)
-
-	// if there are no books in the DB, null would be returned as a bookName.
-	// Since that is undesired, we send an empty array.
-	if (bookName === null) return res.send([])
-
-	res.json(bookName)
 })
 
 module.exports = router

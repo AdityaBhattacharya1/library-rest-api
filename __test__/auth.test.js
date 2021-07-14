@@ -3,18 +3,21 @@ const supertest = require('supertest')
 const request = supertest(app)
 const mongoose = require('mongoose')
 const User = require('../src/models/User')
+const Book = require('../src/models/Books')
 
-const { createTestUser } = require('../src/utils/testDBSetup')
-// const { logToConsole } = require('../src/utils/logToConsole')
+const { createTestUser, createTestBooks } = require('../src/utils/testDBSetup')
 
 describe('Auth tests', () => {
 	beforeAll(() => {
 		createTestUser()
+		createTestBooks()
 	})
 
 	afterAll(async () => {
-		await User.deleteMany({ email: { $eq: 'testing@testtest.com' } })
-		await User.deleteMany({ email: { $eq: 'testing2@testtest.com' } })
+		await User.deleteMany({
+			email: { $regex: '@testtest.com', $options: 'i' },
+		})
+		await Book.deleteMany({})
 		await mongoose.connection.close()
 	})
 
@@ -87,8 +90,6 @@ describe('Auth tests', () => {
 
 		const response = await request.post('/api/user/login').send(testUser)
 
-		// logToConsole(response)
-
 		await request
 			.post('/api/books/new')
 			.set('auth-token', response.text)
@@ -100,15 +101,56 @@ describe('Auth tests', () => {
 			.expect(200)
 
 		await request
+			.post('/api/books/new')
+			.set('auth-token', response.text)
+			.expect(400)
+
+		await request
 			.patch('/api/books/update/nonexistentbook')
 			.set('auth-token', response.text)
 			.expect(400)
 
 		await request
+			.patch('/api/books/update/60ee8f6f3bff4b1734d328bf') // this is a sample objectID. It does not exist in the DB.
+			.set('auth-token', response.text)
+			.send({ title: 'Invalid book' })
+			.expect(404)
+			.expect('No book found by that ID')
+
+		await request
 			.delete('/api/books/delete/nonexistentbook')
 			.set('auth-token', response.text)
-			.expect(400)
+			.expect(404)
 			.expect('Could not find a book by that ID')
+	})
+
+	it('Should return 200 responses as valid parameters are being passed', async () => {
+		const res = await request.get('/api/books/').expect(200)
+
+		const testUser = {
+			email: 'testing2@testtest.com',
+			password: 'totallysecurepasswordnohaxpls',
+		}
+
+		const response = await request
+			.post('/api/user/login')
+			.send(testUser)
+			.expect(200)
+
+		const id = await res.body[0]._id
+
+		await request.get(`/api/books/get/${id}`).expect(200)
+
+		await request
+			.patch(`/api/books/update/${id}`)
+			.set('auth-token', response.text)
+			.send({ title: 'Updated title' })
+			.expect(200)
+
+		await request
+			.delete(`/api/books/delete/${id}`)
+			.set('auth-token', response.text)
+			.expect(200)
 	})
 
 	it('should return a 401 response as there is no auth token being passed', async () => {

@@ -108,19 +108,6 @@ Output: <br />
 <hr />
 <br />
 
-## Get Random Book
-
-```http
-  GET /api/books/random
-```
-
-| Parameter | Type  | Description                                                                                                              |
-| :-------- | :---- | :----------------------------------------------------------------------------------------------------------------------- |
-| None      | `GET` | Fetches a random book from the database (Assuming that there are books stored in the DB, else returns empty JSON object) |
-
-<hr />
-<br />
-
 # Auth routes
 
 These routes require prior authentication. Refer to the [Rate Limiting](README.md/#rate-limit) section in the [README](README.md) file for information on the rate limits for these routes.

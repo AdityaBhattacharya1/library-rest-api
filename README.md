@@ -98,17 +98,16 @@ List of available routes:
 **General routes**:\
 `GET /api/books/` - get all books stored in the DB\
 `GET /api/books/{id}` - get book by id\
-`GET /api/books/author/{author's name}` - get book by author\
-`GET /api/books/random` - get a random book\
+`GET /api/books/author/{author's name}` - get book by author
 
 **Auth routes**:\
 `POST /api/books/new` - create a new book\
 `PATCH /api/books/update/{id}` - update a new book\
-`PATCH /api/books/delete/{id}` - delete a pre-existing book\
+`PATCH /api/books/delete/{id}` - delete a pre-existing book
 
 **User routes**:\
 `POST /api/user/login` - login as a user\
-`POST /api/user/register` - create a user\
+`POST /api/user/register` - create a user
 
 # Authentication
 
