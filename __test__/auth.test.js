@@ -34,7 +34,7 @@ describe('Auth protected routes tests', () => {
 			expect(res.status).toBe(400)
 		})
 
-		it('should return a 400 response as a request body with email which already exists in the DB is being passed', async () => {
+		it('should return a 400 response as a request body with email which already exists is being passed', async () => {
 			const testUser = {
 				name: 'Testing',
 				email: 'testing@testtest.com',
@@ -47,6 +47,21 @@ describe('Auth protected routes tests', () => {
 				.expect((response) => (response.body = 'Email already exists!'))
 
 			expect(res.status).toBe(400)
+		})
+
+		it('should return a 400 response as a request body with an invalid password is being passed', async () => {
+			const testUser = {
+				name: 'Testing',
+				email: 'invalid@testtest.com',
+				password: '123456',
+			}
+
+			const res = await request.post('/api/user/register').send(testUser)
+
+			expect(res.status).toBe(400)
+			expect(res.text).toBe(
+				'"password" length must be at least 8 characters long'
+			)
 		})
 
 		it('should return a 401 response as there is no auth token being passed', async () => {
@@ -149,6 +164,7 @@ describe('Auth protected routes tests', () => {
 
 		it('Should return 200 responses as valid URL parameters are being passed', async () => {
 			const res = await request.get('/api/books/').expect(200)
+			const id = await res.body[0]._id
 
 			const testUser = {
 				email: 'testing2@testtest.com',
@@ -159,8 +175,6 @@ describe('Auth protected routes tests', () => {
 				.post('/api/user/login')
 				.send(testUser)
 				.expect(200)
-
-			const id = await res.body[0]._id
 
 			await request.get(`/api/books/get/${id}`).expect(200)
 
