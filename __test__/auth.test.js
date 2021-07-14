@@ -23,13 +23,21 @@ describe('Auth protected routes tests', () => {
 
 	describe('Unauthenticated, unauthorized and incomplete requests', () => {
 		it('should return a 400 response as no request body is passed', async () => {
-			const res = await request.post('/api/user/login')
+			const res = await request
+				.post('/api/user/login')
+				.expect('X-Download-Options', 'noopen')
+				.expect('X-Content-Type-Options', 'nosniff')
+				.expect('Referrer-Policy', 'no-referrer')
 
 			expect(res.status).toBe(400)
 		})
 
 		it('should return a 400 response as no request body is being passed', async () => {
-			const res = await request.post('/api/user/register')
+			const res = await request
+				.post('/api/user/register')
+				.expect('X-Download-Options', 'noopen')
+				.expect('X-Content-Type-Options', 'nosniff')
+				.expect('Referrer-Policy', 'no-referrer')
 
 			expect(res.status).toBe(400)
 		})
@@ -43,6 +51,9 @@ describe('Auth protected routes tests', () => {
 
 			const res = await request
 				.post('/api/user/register')
+				.expect('X-Download-Options', 'noopen')
+				.expect('X-Content-Type-Options', 'nosniff')
+				.expect('Referrer-Policy', 'no-referrer')
 				.send(testUser)
 				.expect((response) => (response.body = 'Email already exists!'))
 
@@ -56,7 +67,12 @@ describe('Auth protected routes tests', () => {
 				password: '123456',
 			}
 
-			const res = await request.post('/api/user/register').send(testUser)
+			const res = await request
+				.post('/api/user/register')
+				.send(testUser)
+				.expect('X-Download-Options', 'noopen')
+				.expect('X-Content-Type-Options', 'nosniff')
+				.expect('Referrer-Policy', 'no-referrer')
 
 			expect(res.status).toBe(400)
 			expect(res.text).toBe(
@@ -68,6 +84,9 @@ describe('Auth protected routes tests', () => {
 			const res = await request
 				.post('/api/books/new')
 				.expect((response) => (response.body = 'Access denied!'))
+				.expect('X-Download-Options', 'noopen')
+				.expect('X-Content-Type-Options', 'nosniff')
+				.expect('Referrer-Policy', 'no-referrer')
 
 			expect(res.status).toBe(401)
 		})
@@ -76,6 +95,9 @@ describe('Auth protected routes tests', () => {
 			const res = await request
 				.patch('/api/books/update/nonexistentbook')
 				.expect((response) => (response.body = 'Access denied!'))
+				.expect('X-Download-Options', 'noopen')
+				.expect('X-Content-Type-Options', 'nosniff')
+				.expect('Referrer-Policy', 'no-referrer')
 
 			expect(res.status).toBe(401)
 		})
@@ -84,6 +106,9 @@ describe('Auth protected routes tests', () => {
 			const res = await request
 				.delete('/api/books/delete/nonexistentbook')
 				.expect((response) => (response.body = 'Access denied!'))
+				.expect('X-Download-Options', 'noopen')
+				.expect('X-Content-Type-Options', 'nosniff')
+				.expect('Referrer-Policy', 'no-referrer')
 
 			expect(res.status).toBe(401)
 		})
@@ -96,7 +121,12 @@ describe('Auth protected routes tests', () => {
 				password: 'totallysecurepasswordnohaxpls',
 			}
 
-			const res = await request.post('/api/user/login').send(testUser)
+			const res = await request
+				.post('/api/user/login')
+				.send(testUser)
+				.expect('X-Download-Options', 'noopen')
+				.expect('X-Content-Type-Options', 'nosniff')
+				.expect('Referrer-Policy', 'no-referrer')
 
 			expect(res.status).toBe(200)
 		})
@@ -114,6 +144,9 @@ describe('Auth protected routes tests', () => {
 				.expect(
 					(response) => (response.body = 'User created successfully!')
 				)
+				.expect('X-Download-Options', 'noopen')
+				.expect('X-Content-Type-Options', 'nosniff')
+				.expect('Referrer-Policy', 'no-referrer')
 
 			expect(res.status).toBe(201)
 		})
@@ -127,6 +160,9 @@ describe('Auth protected routes tests', () => {
 			const response = await request
 				.post('/api/user/login')
 				.send(testUser)
+				.expect('X-Download-Options', 'noopen')
+				.expect('X-Content-Type-Options', 'nosniff')
+				.expect('Referrer-Policy', 'no-referrer')
 
 			await request
 				.post('/api/books/new')
@@ -137,16 +173,25 @@ describe('Auth protected routes tests', () => {
 					description: 'Hello world!',
 				})
 				.expect(200)
+				.expect('X-Download-Options', 'noopen')
+				.expect('X-Content-Type-Options', 'nosniff')
+				.expect('Referrer-Policy', 'no-referrer')
 
 			await request
 				.post('/api/books/new')
 				.set('auth-token', response.text)
 				.expect(400)
+				.expect('X-Download-Options', 'noopen')
+				.expect('X-Content-Type-Options', 'nosniff')
+				.expect('Referrer-Policy', 'no-referrer')
 
 			await request
 				.patch('/api/books/update/nonexistentbook')
 				.set('auth-token', response.text)
 				.expect(400)
+				.expect('X-Download-Options', 'noopen')
+				.expect('X-Content-Type-Options', 'nosniff')
+				.expect('Referrer-Policy', 'no-referrer')
 
 			await request
 				.patch('/api/books/update/60ee8f6f3bff4b1734d328bf') // this is a sample objectID. It does not exist in the DB.
@@ -154,12 +199,18 @@ describe('Auth protected routes tests', () => {
 				.send({ title: 'Invalid book' })
 				.expect(404)
 				.expect('No book found by that ID')
+				.expect('X-Download-Options', 'noopen')
+				.expect('X-Content-Type-Options', 'nosniff')
+				.expect('Referrer-Policy', 'no-referrer')
 
 			await request
 				.delete('/api/books/delete/nonexistentbook')
 				.set('auth-token', response.text)
 				.expect(404)
 				.expect('Could not find a book by that ID')
+				.expect('X-Download-Options', 'noopen')
+				.expect('X-Content-Type-Options', 'nosniff')
+				.expect('Referrer-Policy', 'no-referrer')
 		})
 
 		it('Should return 200 responses as valid URL parameters are being passed', async () => {
@@ -175,6 +226,9 @@ describe('Auth protected routes tests', () => {
 				.post('/api/user/login')
 				.send(testUser)
 				.expect(200)
+				.expect('X-Download-Options', 'noopen')
+				.expect('X-Content-Type-Options', 'nosniff')
+				.expect('Referrer-Policy', 'no-referrer')
 
 			await request.get(`/api/books/get/${id}`).expect(200)
 
@@ -183,11 +237,17 @@ describe('Auth protected routes tests', () => {
 				.set('auth-token', response.text)
 				.send({ title: 'Updated title' })
 				.expect(200)
+				.expect('X-Download-Options', 'noopen')
+				.expect('X-Content-Type-Options', 'nosniff')
+				.expect('Referrer-Policy', 'no-referrer')
 
 			await request
 				.delete(`/api/books/delete/${id}`)
 				.set('auth-token', response.text)
 				.expect(200)
+				.expect('X-Download-Options', 'noopen')
+				.expect('X-Content-Type-Options', 'nosniff')
+				.expect('Referrer-Policy', 'no-referrer')
 		})
 	})
 })

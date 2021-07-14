@@ -20,6 +20,9 @@ describe('General routes test', () => {
 		const res = await request
 			.get('/api')
 			.expect((response) => (response.body = 'Hello world!'))
+			.expect('X-Download-Options', 'noopen')
+			.expect('X-Content-Type-Options', 'nosniff')
+			.expect('Referrer-Policy', 'no-referrer')
 
 		expect(res.status).toBe(200)
 	})
@@ -28,12 +31,19 @@ describe('General routes test', () => {
 		const res = await request
 			.get('/api/books/')
 			.expect('Content-Type', /json/)
+			.expect('X-Download-Options', 'noopen')
+			.expect('X-Content-Type-Options', 'nosniff')
+			.expect('Referrer-Policy', 'no-referrer')
 
 		expect(res.status).toBe(200)
 	})
 
 	it('Should get 0 books by id from the /get endpoint', async () => {
-		const res = await request.get('/api/books/get/nonexistentbook')
+		const res = await request
+			.get('/api/books/get/nonexistentbook')
+			.expect('X-Download-Options', 'noopen')
+			.expect('X-Content-Type-Options', 'nosniff')
+			.expect('Referrer-Policy', 'no-referrer')
 
 		expect(res.status).toBe(200)
 		expect(res.body).toEqual([])
@@ -44,6 +54,9 @@ describe('General routes test', () => {
 			.get('/api/books/author/Butter-Dog')
 			.expect('Content-Type', /json/)
 			.expect('Content-Length', '2')
+			.expect('X-Download-Options', 'noopen')
+			.expect('X-Content-Type-Options', 'nosniff')
+			.expect('Referrer-Policy', 'no-referrer')
 
 		expect(res.status).toBe(200)
 	})
@@ -52,6 +65,9 @@ describe('General routes test', () => {
 		const res = await request
 			.get('/api/books/random')
 			.expect('Content-Type', /json/)
+			.expect('X-Download-Options', 'noopen')
+			.expect('X-Content-Type-Options', 'nosniff')
+			.expect('Referrer-Policy', 'no-referrer')
 
 		expect(res.status).toBe(200)
 	})
