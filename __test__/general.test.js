@@ -7,7 +7,7 @@ const mongoose = require('mongoose')
 const { createTestBooks } = require('../src/utils/testDBSetup')
 
 describe('General routes test', () => {
-	beforeEach(() => {
+	beforeAll(() => {
 		createTestBooks()
 	})
 
@@ -53,12 +53,13 @@ describe('General routes test', () => {
 		const res = await request
 			.get('/api/books/author/Butter-Dog')
 			.expect('Content-Type', /json/)
-			.expect('Content-Length', '2')
 			.expect('X-Download-Options', 'noopen')
 			.expect('X-Content-Type-Options', 'nosniff')
 			.expect('Referrer-Policy', 'no-referrer')
 
 		expect(res.status).toBe(200)
+		expect(res.body).toBeInstanceOf(Array)
+		expect(res.body).not.toEqual([])
 	})
 
 	it('Should get 0 books from the random book endpoint', async () => {
