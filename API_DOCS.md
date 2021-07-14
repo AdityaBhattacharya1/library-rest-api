@@ -20,12 +20,12 @@ These routes do not require any prior authentication. Refer to the [Rate Limitin
 ## Get All Books
 
 ```http
-  GET /api/books/
+  GET /api/books/${title}
 ```
 
-| Parameter | Type  | Description                                         |
-| :-------- | :---- | :-------------------------------------------------- |
-| None      | `GET` | Gets all the books that are stored in the database. |
+| Parameter        | Type  | Description                                                                                                                                                         |
+| :--------------- | :---- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Title (Optional) | `GET` | Gets all the books that are stored in the database. If the title parameter is passed, then it gets all the books having title like the parameter (Case insensitive) |
 
 <hr />
 <br />
@@ -55,11 +55,11 @@ Example:
   GET /api/books/author/${name}
 ```
 
-| Parameter | Type  | Description                                                                                                                                                      |
-| :-------- | :---- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| id        | `GET` | Substitute `${name}` for the name of the author. The JSON output will return the books authored (an array, if there are multiple entries or just a JSON object). |
+| Parameter | Type  | Description                                                                                                                                                                         |
+| :-------- | :---- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| id        | `GET` | Substitute `${name}` for the name of the author (Case insensitive). The JSON output will return the books authored (an array, if there are multiple entries or just a JSON object). |
 
-**Note: While substituting for ${name}, ensure that you replace the whitespace in the name with hyphens (-) and maintain the punctuation of the name.** <br />
+<br />
 
 ### Example: <br />
 
@@ -67,7 +67,7 @@ Input:
 
 ```sh
  # A book authored by Dan Brown is already stored in the DB
-  http://localhost:3000/books/author/Dan-Brown
+  http://localhost:3000/books/author/dan-brown
 ```
 
 Output: <br />

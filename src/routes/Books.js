@@ -23,7 +23,10 @@ router.get('/:title?', async (req, res) => {
 	let books
 	if (req.params.title) {
 		books = await Book.find({
-			title: { $regex: req.params.title, $options: 'i' },
+			title: {
+				$regex: req.params.title.replace(/-/g, ' '),
+				$options: 'i',
+			},
 		})
 	} else {
 		books = await Book.find()
@@ -44,7 +47,7 @@ router.get('/get/:id', async (req, res) => {
 // 3. Get book by author's name (GET)
 router.get('/author/:name', async (req, res) => {
 	const authoredBook = await Book.find({
-		author: req.params.name.replace(/-/g, ' '),
+		author: { $regex: req.params.name.replace(/-/g, ' '), $options: 'i' },
 	})
 	res.json(authoredBook)
 })
