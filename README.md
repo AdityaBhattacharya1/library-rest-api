@@ -17,7 +17,6 @@ A sample rest API for a hypothetical library.
 -   [To Start](#to-start)
 -   [Contributing](#contributing)
 -   [License](#license)
--   [Todo](#todo)
 
 # Technologies used:
 
