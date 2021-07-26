@@ -1,12 +1,16 @@
-# Library REST API
-
-A sample rest API for a hypothetical library.
+<h1 align="center">Library REST API</h1>
+<p align="center">
+    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg" />
+    <img alt="License: MIT" src="https://www.travis-ci.com/AdityaBhattacharya1/library-rest-api.svg?branch=main" />
+	
+   > A sample rest API for a hypothetical library.
+</p>
 
 # Table of Contents
 
--   [Technologies Used](#tech-used)
+-   [Technologies Used](#technologies-used)
 -   [Features](#features)
--   [Environment Variables](#environment-variables)
+-   [Environment Variables](#environmental-variables)
 -   [Project Structure](#project-structure)
 -   [API Documentation](#api-documentation)
 -   [Authentication](#authentication)
@@ -18,7 +22,7 @@ A sample rest API for a hypothetical library.
 -   [Contributing](#contributing)
 -   [License](#license)
 
-# Technologies used:
+# Technologies Used:
 
 -   **Node.js**
 -   **Express**
