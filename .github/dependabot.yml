@@ -3,8 +3,7 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
-      interval: 'weekly'
-      day: 'wednesday'
+      interval: 'monthly'
     commit-message:
       prefix: '[Dependabot]'
     labels:
@@ -12,4 +11,4 @@ updates:
     open-pull-requests-limit: 10
     reviewers:
       - 'AdityaBhattacharya1'
-    versioning-strategy: 'increase'
+    versioning-strategy: 'increase-if-necessary'
