@@ -44,7 +44,7 @@
 -   **CORS**: Cross-Origin Resource-Sharing enabled using [cors](https://github.com/expressjs/cors)
 -   **Compression**: gzip compression with [compression](https://github.com/expressjs/compression)
 -   **Docker support**
--   **Continuous Integration**: using [Travis CI](https://travis-ci.org/)
+-   **Continuous Integration**: using [Github Actions](https://docs.github.com/en/actions)
 -   **Linting and code quality plugins**: using [eslint](https://eslint.org/)
 -   **Rate limits**: controlled request inflow using [express-rate-limit](https://www.npmjs.com/package/express-rate-limit)
 
