@@ -8,7 +8,7 @@ const Book = require('../src/models/Books')
 const { createTestUser, createTestBooks } = require('../src/utils/testDBSetup')
 
 describe('Auth protected routes tests', () => {
-	beforeAll(() => {
+	beforeEach(() => {
 		createTestUser()
 		createTestBooks()
 	})
