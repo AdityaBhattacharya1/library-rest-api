@@ -2,7 +2,7 @@ name: CI API tests
 
 on:
     push:
-        branches: [master]
+        branches: [main]
 
 jobs:
     build:
