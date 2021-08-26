@@ -1,0 +1,42 @@
+name: CI API tests
+
+on:
+    push:
+        branches: [master]
+    pull_request:
+        branches: [master]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [12.x, 14.x, 15.x]
+                mongodb-version: ['4.2', '4.4']
+
+        steps:
+            - name: Git checkout
+              uses: actions/checkout@v2
+
+            - name: Install Node JS ${{ matrix.node-version }}
+              uses: actions/setup-node@v1
+              with:
+                  node-version: ${{ matrix.node-version }}
+
+            - name: Start MongoDB ${{ matrix.mongodb-version }}
+              uses: supercharge/mongodb-github-action@1.6.0
+              with:
+                  mongodb-version: ${{ matrix.mongodb-version }}
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Run tests + show coverage
+              run: npm run coverage
+              env:
+                  NODE_ENV: test
+                  DB_URL: mongodb://localhost:27017/library
+                  PORT: 3000
+                  JWT_SECRET: samplecitestingsecrethahajkjkunless??
+                  JWT_EXPIRE_TIME: 1h
+                  SALT_ROUNDS: 10
