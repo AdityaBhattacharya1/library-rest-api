@@ -23,7 +23,7 @@
 		"express": "^4.17.1",
 		"express-mongo-sanitize": "^2.1.0",
 		"express-rate-limit": "^6.0.3",
-		"helmet": "^4.6.0",
+		"helmet": "^5.0.2",
 		"jsonwebtoken": "^8.5.1",
 		"log4js": "^6.3.0",
 		"mongoose": "^6.0.0",
