@@ -1,7 +1,7 @@
 <h1 align="center">Library REST API</h1>
 <p align="center">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" />
-    <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/adityabhattacharya1/library-rest-api/CI%20API%20tests?style=for-the-badge">
+    <img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/adityabhattacharya1/library-rest-api/api-ci-test.yml?style=for-the-badge">
 	
    > A sample rest API for a hypothetical library.
 </p>
