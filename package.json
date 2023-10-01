@@ -22,7 +22,7 @@
 		"dotenv": "^16.0.0",
 		"express": "^4.17.1",
 		"express-mongo-sanitize": "^2.1.0",
-		"express-rate-limit": "^6.0.3",
+		"express-rate-limit": "^7.0.2",
 		"helmet": "^7.0.0",
 		"jsonwebtoken": "^9.0.0",
 		"log4js": "^6.3.0",
